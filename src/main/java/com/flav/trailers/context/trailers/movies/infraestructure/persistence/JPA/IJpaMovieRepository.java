@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IJpaMovieRepository extends JpaRepository<MovieEntity, Long> {
 
-    public boolean findByName(String name);
+    public boolean existsByName(String name);
 
 }

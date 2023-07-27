@@ -5,6 +5,7 @@ import com.flav.trailers.context.trailers.movies.domain.models.Movie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ public class CreateMovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> create(Movie movie) {
+    public ResponseEntity<Movie> create(@RequestBody Movie movie) {
         Movie data = useCase.run((movie));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(data);

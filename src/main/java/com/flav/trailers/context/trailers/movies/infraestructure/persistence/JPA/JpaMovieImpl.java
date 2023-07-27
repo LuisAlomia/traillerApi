@@ -27,7 +27,7 @@ public class JpaMovieImpl implements IMovieCRUDRepository {
 
     @Override
     public boolean findByName(String name) {
-        return repo.findByName(name);
+        return repo.existsByName(name);
     }
 
     @Override

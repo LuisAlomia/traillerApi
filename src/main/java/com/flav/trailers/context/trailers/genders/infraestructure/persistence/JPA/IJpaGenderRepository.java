@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IJpaGenderRepository extends JpaRepository<GenderEntity, Long> {
 
-    public boolean findByName(String name);
+    public boolean existsByName(String name);
 
 }
