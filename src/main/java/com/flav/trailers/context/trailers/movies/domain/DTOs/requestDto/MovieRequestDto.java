@@ -1,6 +1,5 @@
-package com.flav.trailers.context.trailers.movies.domain.models;
+package com.flav.trailers.context.trailers.movies.domain.DTOs.requestDto;
 
-import com.flav.trailers.context.trailers.genders.domain.models.Gender;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -12,14 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Movie {
-
+public class MovieRequestDto {
     private Long id;
     private String name;
     private String description;
     private String image;
     private String video;
     private Date releaseDate;
-    private List<Gender> gender = new ArrayList<>();
-
+    private List<Long> gendersId = new ArrayList<>();
 }

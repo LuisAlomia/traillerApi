@@ -1,9 +1,12 @@
 package com.flav.trailers.context.trailers.movies.infraestructure.persistence.entities;
 
+import com.flav.trailers.context.trailers.genders.infraestructure.persistence.entities.GenderEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,5 +26,12 @@ public class MovieEntity {
     private String video;
     @Column(name = "release_date")
     private Date releaseDate;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "Movie_Gender",
+            joinColumns = @JoinColumn(name = "movie"),
+            inverseJoinColumns = @JoinColumn(name = "gender")
+    )
+    private List<GenderEntity> gender = new ArrayList<>();
 
 }
