@@ -1,6 +1,7 @@
 package com.flav.trailers.context.trailers.movies.infraestructure.controllers;
 
 import com.flav.trailers.context.trailers.movies.application.CreateMovieUseCase;
+import com.flav.trailers.context.trailers.movies.domain.DTOs.requestDto.MovieRequestDto;
 import com.flav.trailers.context.trailers.movies.domain.models.Movie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class CreateMovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> create(@RequestBody Movie movie) {
+    public ResponseEntity<Movie> create(@RequestBody MovieRequestDto movie) {
         Movie data = useCase.run((movie));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(data);

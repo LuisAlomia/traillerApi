@@ -1,5 +1,6 @@
 package com.flav.trailers.context.trailers.movies.infraestructure.config;
 
+import com.flav.trailers.context.trailers.genders.application.FindByIdGenderUseCase;
 import com.flav.trailers.context.trailers.movies.application.CreateMovieUseCase;
 import com.flav.trailers.context.trailers.movies.application.FindAllMovieUseCase;
 import com.flav.trailers.context.trailers.movies.application.FindByIdMovieUseCase;
@@ -22,8 +23,8 @@ public class MovieApplicationConfig {
     }
 
     @Bean
-    public CreateMovieUseCase createMovieUseCase(IMovieCRUDRepository repo) {
-        return new CreateMovieUseCase(repo);
+    public CreateMovieUseCase createMovieUseCase(IMovieCRUDRepository repo, FindByIdGenderUseCase findGenderUseCase) {
+        return new CreateMovieUseCase(repo, findGenderUseCase);
     }
 
 }
