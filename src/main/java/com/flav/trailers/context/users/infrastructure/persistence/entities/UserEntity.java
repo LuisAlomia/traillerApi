@@ -1,6 +1,5 @@
 package com.flav.trailers.context.users.infrastructure.persistence.entities;
 
-import com.flav.trailers.context.trailers.genders.infraestructure.persistence.entities.GenderEntity;
 import com.flav.trailers.context.trailers.movies.infraestructure.persistence.entities.MovieEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +28,6 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "client"),
             inverseJoinColumns = @JoinColumn(name = "movie")
     )
-    private List<GenderEntity> favorites = new ArrayList<>();
+    private List<MovieEntity> favorites = new ArrayList<>();
 
 }
