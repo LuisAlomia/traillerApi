@@ -1,9 +1,15 @@
 package com.flav.trailers.context.trailers.movies.infraestructure.persistence.JPA;
 
+import com.flav.trailers.commons.model.Pagination;
+import com.flav.trailers.context.trailers.movies.domain.DTOs.responseDto.MoviePagination;
 import com.flav.trailers.context.trailers.movies.domain.repositories.IMovieCRUDRepository;
 import com.flav.trailers.context.trailers.movies.infraestructure.persistence.entities.MovieEntity;
 import com.flav.trailers.context.trailers.movies.infraestructure.persistence.mappers.MapperMovie;
 import com.flav.trailers.context.trailers.movies.domain.models.Movie;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,8 +27,30 @@ public class JpaMovieImpl implements IMovieCRUDRepository {
     }
 
     @Override
-    public List<Movie> findAll() {
-        return repo.findAll().stream().map(mapper::toModel).toList();
+    public MoviePagination findAll(Pagination pagination) {
+        //sort pages by direction and property
+        Sort sort = pagination.getOrderDir().equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(pagination.getOrderBy()).ascending()
+                : Sort.by(pagination.getOrderBy()).descending();
+
+        //pagination parameters
+        Pageable pageable = PageRequest.of(pagination.getPage(), pagination.getSize(), sort);
+
+        //movies paginated according to parameters
+        Page<MovieEntity> pagesMovies = repo.findAll(pageable);
+
+        //movie page to list
+        List<Movie> listMovies = pagesMovies.stream().map(mapper::toModel).toList();
+
+        //return of mapper of List Movie to MoviePagination
+        return MoviePagination.builder()
+                .totalPages(pagesMovies.getTotalPages())
+                .totalItems(pagesMovies.getTotalElements())
+                .pageNo(pagesMovies.getNumber() + 1)
+                .pageSize(pagesMovies.getSize())
+                .last(pagesMovies.isLast())
+                .data(listMovies)
+                .build();
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.flav.trailers.context.trailers.movies.application;
 
-
-import com.flav.trailers.context.trailers.movies.domain.models.Movie;
+import com.flav.trailers.commons.model.Pagination;
+import com.flav.trailers.context.trailers.movies.domain.DTOs.responseDto.MoviePagination;
 import com.flav.trailers.context.trailers.movies.domain.repositories.IMovieCRUDRepository;
-
-import java.util.List;
 
 public class FindAllMovieUseCase {
 
@@ -14,8 +12,8 @@ public class FindAllMovieUseCase {
         this.repo = repo;
     }
 
-    public List<Movie> run() {
-        return  repo.findAll();
+    public MoviePagination run(Pagination pagination) {
+        return  repo.findAll(pagination);
     }
 
 }
