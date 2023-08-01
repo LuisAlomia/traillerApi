@@ -1,5 +1,6 @@
 package com.flav.trailers.context.trailers.movies.infraestructure.config;
 
+import com.flav.trailers.context.trailers.movies.domain.exceptions.ErrorArgumentException;
 import com.flav.trailers.context.trailers.movies.domain.exceptions.MovieResourceExist;
 import com.flav.trailers.context.trailers.movies.domain.exceptions.MovieResourceNotFound;
 import org.springframework.http.ResponseEntity;
@@ -18,4 +19,11 @@ public class MovieControllerAdvanceExceptions {
     public ResponseEntity<String> handleEmptyInput(MovieResourceExist emptyInputException){
         return new ResponseEntity<>(emptyInputException.getMessage(), emptyInputException.getStatus());
     }
+
+    @ExceptionHandler(ErrorArgumentException.class)
+    public ResponseEntity<String> handleEmptyInput(ErrorArgumentException emptyInputException){
+        return new ResponseEntity<>(emptyInputException.getMessage(), emptyInputException.getStatus());
+    }
+
+
 }

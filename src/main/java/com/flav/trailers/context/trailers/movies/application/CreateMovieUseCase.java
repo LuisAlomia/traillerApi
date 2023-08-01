@@ -3,15 +3,18 @@ package com.flav.trailers.context.trailers.movies.application;
 import com.flav.trailers.context.trailers.genders.application.FindByIdGenderUseCase;
 import com.flav.trailers.context.trailers.genders.domain.models.Gender;
 import com.flav.trailers.context.trailers.movies.domain.DTOs.requestDto.MovieRequestDto;
+import com.flav.trailers.context.trailers.movies.domain.exceptions.ErrorArgumentException;
 import com.flav.trailers.context.trailers.movies.domain.exceptions.MovieResourceExist;
 import com.flav.trailers.context.trailers.movies.domain.repositories.IMovieCRUDRepository;
 import com.flav.trailers.context.trailers.movies.domain.constants.MovieConstants;
 import com.flav.trailers.context.trailers.movies.domain.models.Movie;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
 public class CreateMovieUseCase {
 
     private final IMovieCRUDRepository repo;
@@ -23,6 +26,12 @@ public class CreateMovieUseCase {
     }
 
     public Movie run(MovieRequestDto movie) {
+        //Check gender > 0
+        if(movie.getGendersId().isEmpty()) {
+            throw new ErrorArgumentException("the movie must belong to an existing genre", HttpStatus.BAD_REQUEST);
+        }
+
+        //Check name movie exits
         boolean findMovie = repo.findByName(movie.getName());
 
         if(findMovie) {
@@ -37,14 +46,12 @@ public class CreateMovieUseCase {
             listGender.add(gender);
         }
 
-        Movie newMovie = Movie.builder()
-                .name(movie.getName())
-                .description(movie.getDescription())
-                .image(movie.getImage())
-                .video(movie.getVideo())
-                .releaseDate(movie.getReleaseDate())
-                .gender(listGender)
-                .build();
+        Movie newMovie = new Movie(movie.getName(),
+                movie.getDescription(),
+                movie.getImage(),
+                movie.getVideo(),
+                movie.getReleaseDate(),
+                listGender);
 
         return repo.create(newMovie);
     }
