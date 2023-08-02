@@ -1,7 +1,7 @@
 package com.flav.trailers.context.trailers.movies.domain.models;
 
 import com.flav.trailers.context.trailers.genders.domain.models.Gender;
-import com.flav.trailers.context.trailers.movies.valueObjects.StringTypeUrlVO;
+import com.flav.trailers.context.trailers.movies.domain.valueObjects.StringTypeUrlVO;
 import lombok.*;
 
 import java.util.Date;

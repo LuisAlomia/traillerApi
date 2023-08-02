@@ -9,6 +9,7 @@ import com.flav.trailers.context.trailers.movies.domain.repositories.IMovieCRUDR
 import com.flav.trailers.context.trailers.movies.domain.constants.MovieConstants;
 import com.flav.trailers.context.trailers.movies.domain.models.Movie;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
@@ -25,9 +26,11 @@ public class CreateMovieUseCase {
         this.findGenderUseCase = findGenderUseCase;
     }
 
+    @CacheEvict(value = "movies", allEntries = true)
     public Movie run(MovieRequestDto movie) {
         //Check gender > 0
         if(movie.getGendersId().isEmpty()) {
+            log.info("Request error in class | CreateMovieUseCase | gender not found");
             throw new ErrorArgumentException("the movie must belong to an existing genre", HttpStatus.BAD_REQUEST);
         }
 
@@ -35,6 +38,7 @@ public class CreateMovieUseCase {
         boolean findMovie = repo.findByName(movie.getName());
 
         if(findMovie) {
+            log.info("Request error in class | CreateMovieUseCase | name movie exist");
             throw new MovieResourceExist(String.format(MovieConstants.MOVIE_EXITS, movie.getName()), HttpStatus.FOUND);
         }
 
@@ -53,6 +57,7 @@ public class CreateMovieUseCase {
                 movie.getReleaseDate(),
                 listGender);
 
+        log.info("Successful request in class | CreateMovieUseCase |");
         return repo.create(newMovie);
     }
 
