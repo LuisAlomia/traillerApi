@@ -1,4 +1,4 @@
-package com.flav.trailers.context.trailers.movies.valueObjects;
+package com.flav.trailers.context.trailers.movies.domain.valueObjects;
 
 import com.flav.trailers.context.trailers.movies.domain.exceptions.ErrorArgumentException;
 import lombok.Getter;

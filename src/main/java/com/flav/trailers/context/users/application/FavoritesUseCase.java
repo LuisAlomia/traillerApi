@@ -5,6 +5,7 @@ import com.flav.trailers.context.trailers.movies.domain.models.Movie;
 import com.flav.trailers.context.users.domain.models.User;
 import com.flav.trailers.context.users.domain.repositories.IUserCRUDRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.Objects;
 
@@ -21,6 +22,7 @@ public class FavoritesUseCase {
         this.movieFindById = movieFindById;
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public boolean run(Long idUser, Long idMovie) {
         //we look for the user if it is not found we return error
         User user = userFindById.run(idUser);
@@ -47,8 +49,8 @@ public class FavoritesUseCase {
         user.getFavorites().add(movie);
         repo.create(user);
 
+        log.info("Successful request in class | FavoritesUseCase |");
         return true;
     }
-
 
 }
