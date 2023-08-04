@@ -23,11 +23,11 @@ public class FindByIdUserUseCase {
         Optional<User> user = repo.findById(id);
 
         if(user.isEmpty()) {
-            log.info("Request error in class | FindAllUserUseCase | user not found");
+            log.info("Request error in class | FindByIdUserUseCase | user not found");
             throw new UserResourceNotFound(String.format(UserConstants.USER_NOT_FOUND, id), HttpStatus.NOT_FOUND);
         }
 
-        log.info("Successful request in class | FindAllUserUseCase |");
+        log.info("Successful request in class | FindByIdUserUseCase |");
         return user.get();
     }
 

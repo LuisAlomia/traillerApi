@@ -2,10 +2,13 @@ package com.flav.trailers.context.users.application;
 
 import com.flav.trailers.context.trailers.movies.application.FindByIdMovieUseCase;
 import com.flav.trailers.context.trailers.movies.domain.models.Movie;
+import com.flav.trailers.context.users.domain.constants.UserConstants;
+import com.flav.trailers.context.users.domain.exceptions.UserResourceNotFound;
 import com.flav.trailers.context.users.domain.models.User;
 import com.flav.trailers.context.users.domain.repositories.IUserCRUDRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.http.HttpStatus;
 
 import java.util.Objects;
 
@@ -13,19 +16,22 @@ import java.util.Objects;
 public class FavoritesUseCase {
 
     private final IUserCRUDRepository repo;
-    private final FindByIdUserUseCase userFindById;
     private final FindByIdMovieUseCase movieFindById;
 
-    public FavoritesUseCase(IUserCRUDRepository repo, FindByIdUserUseCase userFindById, FindByIdMovieUseCase movieFindById) {
+    public FavoritesUseCase(IUserCRUDRepository repo, FindByIdMovieUseCase movieFindById) {
         this.repo = repo;
-        this.userFindById = userFindById;
         this.movieFindById = movieFindById;
     }
 
     @CacheEvict(value = "users", allEntries = true)
     public boolean run(Long idUser, Long idMovie) {
         //we look for the user if it is not found we return error
-        User user = userFindById.run(idUser);
+        User user = repo.findUserforfavorite(idUser).orElse(null);
+
+        if(user == null) {
+            log.info("Request error in class | FindByIdUserUseCase | user not found");
+            throw new UserResourceNotFound(String.format(UserConstants.USER_NOT_FOUND, idUser), HttpStatus.NOT_FOUND);
+        }
 
         //we look for the movie if it is not found we return error
         Movie movie = movieFindById.run(idMovie);

@@ -23,13 +23,11 @@ public class UserApplicationConfig {
     }
 
     @Bean
-    public CreateUserUseCase CreateUserUseCase(IUserCRUDRepository repo) {
-        return new CreateUserUseCase(repo);
-    }
+    public CreateUserUseCase createUserUseCase(IUserCRUDRepository repo) {return new CreateUserUseCase(repo); }
 
     @Bean
-    public FavoritesUseCase favoritesUseCase(IUserCRUDRepository repo, FindByIdUserUseCase userFindById, FindByIdMovieUseCase movieFindById ) {
-        return new FavoritesUseCase(repo, userFindById, movieFindById);
+    public FavoritesUseCase favoritesUseCase(IUserCRUDRepository repo, FindByIdMovieUseCase movieFindById) {
+        return new FavoritesUseCase(repo, movieFindById);
     }
 
 }

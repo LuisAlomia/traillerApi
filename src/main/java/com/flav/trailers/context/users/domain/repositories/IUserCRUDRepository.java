@@ -13,6 +13,6 @@ public interface IUserCRUDRepository {
     public User create(User user);
     public User update(User user);
     public boolean delete(Long id);
-    //public boolean favorite()
+    public Optional<User> findUserforfavorite(Long id);
 
 }
