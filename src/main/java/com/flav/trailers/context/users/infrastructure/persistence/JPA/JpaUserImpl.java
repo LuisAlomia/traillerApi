@@ -36,6 +36,11 @@ public class JpaUserImpl implements IUserCRUDRepository {
     }
 
     @Override
+    public Optional<User> findUserforfavorite(Long id) {
+        return repo.findById(id).map(mapper::toFavorite);
+    }
+
+    @Override
     public User create(User user) {
         UserEntity newUser = repo.save(mapper.toEntity(user));
 
