@@ -15,7 +15,7 @@ public class FindAllMovieUseCase {
         this.repo = repo;
     }
 
-    @Cacheable({"movies", "genders"})
+    @Cacheable("movies")
     public MoviePagination run(Pagination pagination) {
         log.info("Successful request in class | FindAllMovieUseCase |");
         return  repo.findAll(pagination);
