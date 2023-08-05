@@ -38,7 +38,7 @@ jobs:
       - name: Build app
         run: mvn package -DskipTests --file pom.xml
       - name: Upload JAR
-        uses: actions/setup-java@v3
+        uses: actions/upload-artifact@v3
         with:
           name: artifact
           path: target/trailers-0.0.1-SNAPSHOT.jar
