@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -39,11 +40,6 @@
 			<optional>true</optional>
 		</dependency> -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
@@ -56,6 +52,18 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.9.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.4.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -74,8 +82,56 @@
 			<artifactId>spring-boot-starter-cache</artifactId>
 			<version>2.4.0</version>
 		</dependency>
-
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>dev</build.profile.id>
+				<profileActive>dev</profileActive>
+			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>
+							src/main/resources
+						</directory>
+						<filtering>true</filtering>
+						<excludes>
+							<exclude>application-test.properties</exclude>
+						</excludes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>test</build.profile.id>
+				<profileActive>test</profileActive>
+			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>
+							src/main/resources
+						</directory>
+						<filtering>true</filtering>
+						<excludes>
+							<exclude>application-dev.properties</exclude>
+						</excludes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>

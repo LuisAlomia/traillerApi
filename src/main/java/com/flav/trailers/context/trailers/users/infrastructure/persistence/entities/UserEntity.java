@@ -1,6 +1,6 @@
 package com.flav.trailers.context.trailers.users.infrastructure.persistence.entities;
 
-import com.flav.trailers.context.trailers.movies.infraestructure.persistence.entities.MovieEntity;
+import com.flav.trailers.context.trailers.movies.infrastructure.persistence.entities.MovieEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
