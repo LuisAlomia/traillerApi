@@ -46,7 +46,7 @@ public class JpaMovieImpl implements IMovieCRUDRepository {
         return MoviePagination.builder()
                 .totalPages(pagesMovies.getTotalPages())
                 .totalItems(pagesMovies.getTotalElements())
-                .pageNo(pagesMovies.getNumber() + 1)
+                .pageNo(pagesMovies.getNumber())
                 .pageSize(pagesMovies.getSize())
                 .last(pagesMovies.isLast())
                 .data(listMovies)

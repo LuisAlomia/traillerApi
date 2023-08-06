@@ -6,6 +6,7 @@ import com.flav.trailers.context.trailers.users.domain.constants.UserConstants;
 import com.flav.trailers.context.trailers.users.domain.exceptions.UserResourceNotFound;
 import com.flav.trailers.context.trailers.users.domain.repositories.IUserCRUDRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
@@ -19,6 +20,7 @@ public class FindByIdUserUseCase {
         this.repo = repo;
     }
 
+    @Cacheable("users")
     public User run(Long id) {
         Optional<User> user = repo.findById(id);
 
