@@ -1,6 +1,5 @@
 package com.flav.trailers.context.trailers.users.application;
 
-
 import com.flav.trailers.context.trailers.users.domain.models.User;
 import com.flav.trailers.context.trailers.users.domain.repositories.IUserCRUDRepository;
 import lombok.extern.log4j.Log4j2;
